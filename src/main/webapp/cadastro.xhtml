@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<!--
+    cadastro.xhtml — View JSF para cadastro de livros.
+    Utiliza componentes nativos do JavaServer Faces e se comunica
+    diretamente com o LivroBean (Managed Bean).
+    
+    Esta página demonstra o uso do JSF como alternativa ao JSP+Servlet.
+    Camada VIEW do padrão MVC via JSF.
+-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      lang="pt-BR">
+
+<h:head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Cadastro JSF — Biblioteca Cesumar</title>
+    <h:outputStylesheet library="css" name="estilo.css"/>
+    <!-- Fallback para CSS caso o resource handler do JSF não funcione -->
+    <link rel="stylesheet" href="css/estilo.css"/>
+</h:head>
+
+<h:body>
+
+    <!-- CABEÇALHO -->
+    <header>
+        <div class="header-inner">
+            <span class="header-icone">📚</span>
+            <div class="header-titulo">
+                <h1>Biblioteca Cesumar</h1>
+                <p>Sistema de Gerenciamento do Acervo — JSF</p>
+            </div>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="livros">📋 Acervo</a></li>
+                <li><a href="livros?acao=form">➕ Cadastro JSP</a></li>
+                <li><a href="cadastro.xhtml" class="ativo">🖊 Cadastro JSF</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main class="container">
+
+        <h2 class="secao-titulo">🖊 Cadastro via JSF</h2>
+
+        <!-- Exibição de mensagens do JSF (FacesMessage) -->
+        <h:messages styleClass="mensagem mensagem-erro"
+                    errorClass="mensagem mensagem-erro"
+                    infoClass="mensagem mensagem-sucesso"
+                    warnClass="mensagem mensagem-aviso"
+                    showDetail="true"
+                    showSummary="false"
+                    globalOnly="true"/>
+
+        <!-- Card do formulário JSF -->
+        <div class="card">
+
+            <!--
+                h:form: componente de formulário do JSF.
+                Os campos são vinculados diretamente ao LivroBean
+                por meio da Expression Language (#{livroBean.livro.campo}).
+            -->
+            <h:form id="formCadastro">
+
+                <div class="form-grid">
+
+                    <!-- Título -->
+                    <div class="form-grupo full-width">
+                        <h:outputLabel for="titulo" value="Título do Livro *"/>
+                        <h:inputText id="titulo"
+                                     value="#{livroBean.livro.titulo}"
+                                     placeholder="Ex: Dom Casmurro"
+                                     maxlength="200"
+                                     styleClass=""/>
+                    </div>
+
+                    <!-- Autor -->
+                    <div class="form-grupo full-width">
+                        <h:outputLabel for="autor" value="Autor *"/>
+                        <h:inputText id="autor"
+                                     value="#{livroBean.livro.autor}"
+                                     placeholder="Ex: Machado de Assis"
+                                     maxlength="150"/>
+                    </div>
+
+                    <!-- Ano de publicação -->
+                    <div class="form-grupo">
+                        <h:outputLabel for="ano" value="Ano de Publicação *"/>
+                        <h:inputText id="ano"
+                                     value="#{livroBean.livro.anoPublicacao}"
+                                     placeholder="Ex: 1899"
+                                     maxlength="4">
+                            <!-- Conversor garante que o valor seja tratado como inteiro -->
+                            <f:convertNumber integerOnly="true"/>
+                        </h:inputText>
+                        <small>Informe um ano entre 1000 e 2099.</small>
+                    </div>
+
+                    <!-- ISBN -->
+                    <div class="form-grupo">
+                        <h:outputLabel for="isbn" value="ISBN *"/>
+                        <h:inputText id="isbn"
+                                     value="#{livroBean.livro.isbn}"
+                                     placeholder="Ex: 978-8535914849"
+                                     maxlength="20"/>
+                        <small>ISBN com 10 ou 13 dígitos.</small>
+                    </div>
+
+                    <!-- Botões -->
+                    <div class="acoes-form">
+                        <!--
+                            h:commandButton: botão que chama o método cadastrar()
+                            do LivroBean ao ser clicado.
+                        -->
+                        <h:commandButton value="✅ Cadastrar Livro"
+                                         action="#{livroBean.cadastrar}"
+                                         styleClass="btn btn-primario"/>
+
+                        <h:link value="← Voltar ao Acervo"
+                                outcome="/livros"
+                                styleClass="btn btn-secundario"/>
+                    </div>
+
+                </div>
+
+            </h:form>
+        </div>
+
+        <!-- Explicação sobre JSF -->
+        <div class="card" style="background: #eef3f9; border-left: 4px solid #1a3a5c;">
+            <p style="color: #1a3a5c; font-size: 0.9rem;">
+                ℹ️ <strong>Esta página usa JSF.</strong>
+                Os campos são vinculados diretamente ao
+                <code>LivroBean</code> via Expression Language,
+                sem necessidade de processar o request manualmente.
+                <br/><br/>
+                Prefere o formulário Servlet + JSP?
+                <a href="livros?acao=form"
+                   style="color: #c8a96e; font-weight: 600; text-decoration: none;">
+                   Clique aqui.
+                </a>
+            </p>
+        </div>
+
+    </main>
+
+    <footer>
+        <p>Biblioteca Cesumar &#169; 2025 — Sistema desenvolvido em
+           <span>Java · Servlets · JSP · JSF</span></p>
+    </footer>
+
+</h:body>
+</html>

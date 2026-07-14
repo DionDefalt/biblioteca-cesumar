@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<!--
+    lista.xhtml — View JSF para listagem e exclusão de livros.
+    Utiliza h:dataTable para exibir os livros e h:commandButton
+    para acionar a exclusão diretamente no LivroBean.
+-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      lang="pt-BR">
+
+<h:head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Acervo JSF — Biblioteca Cesumar</title>
+    <link rel="stylesheet" href="css/estilo.css"/>
+</h:head>
+
+<h:body>
+
+    <header>
+        <div class="header-inner">
+            <span class="header-icone">📚</span>
+            <div class="header-titulo">
+                <h1>Biblioteca Cesumar</h1>
+                <p>Sistema de Gerenciamento do Acervo — JSF</p>
+            </div>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="livros" class="ativo">📋 Acervo</a></li>
+                <li><a href="livros?acao=form">➕ Cadastro JSP</a></li>
+                <li><a href="cadastro.xhtml">🖊 Cadastro JSF</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+
+        <h2 class="secao-titulo">📋 Acervo — Listagem JSF</h2>
+
+        <!-- Mensagens do JSF -->
+        <h:messages globalOnly="true"
+                    infoClass="mensagem mensagem-sucesso"
+                    errorClass="mensagem mensagem-erro"
+                    warnClass="mensagem mensagem-aviso"
+                    showDetail="true"
+                    showSummary="false"/>
+
+        <div class="card">
+            <div class="tabela-wrapper">
+
+                <!--
+                    h:dataTable: componente JSF que itera sobre a lista
+                    retornada pelo método getLivros() do LivroBean.
+                -->
+                <h:dataTable value="#{livroBean.livros}"
+                             var="livro"
+                             rendered="#{not empty livroBean.livros}"
+                             style="width:100%; border-collapse:collapse;">
+
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="#" style="font-size:0.8rem; letter-spacing:1px;"/>
+                        </f:facet>
+                        <h:outputText value="#{livro.id}" styleClass="td-id"/>
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="TÍTULO"/>
+                        </f:facet>
+                        <strong><h:outputText value="#{livro.titulo}"/></strong>
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="AUTOR"/>
+                        </f:facet>
+                        <h:outputText value="#{livro.autor}"/>
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="ANO"/>
+                        </f:facet>
+                        <h:outputText value="#{livro.anoPublicacao}"/>
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="ISBN"/>
+                        </f:facet>
+                        <h:outputText value="#{livro.isbn}" styleClass="td-isbn"/>
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="AÇÃO"/>
+                        </f:facet>
+                        <!-- Botão de exclusão chama livroBean.excluir(id) -->
+                        <h:form>
+                            <h:commandButton value="🗑️ Excluir"
+                                             styleClass="btn btn-perigo"
+                                             onclick="return confirm('Remover este livro do acervo?');"
+                                             action="#{livroBean.excluir(livro.id)}"/>
+                        </h:form>
+                    </h:column>
+
+                </h:dataTable>
+
+                <!-- Mensagem de lista vazia -->
+                <h:panelGroup rendered="#{empty livroBean.livros}">
+                    <div class="tabela-vazia">
+                        <p>📭 Nenhum livro cadastrado no acervo.</p>
+                    </div>
+                </h:panelGroup>
+
+            </div>
+        </div>
+
+        <div style="margin-top: 8px;">
+            <h:link value="➕ Cadastrar Novo Livro"
+                    outcome="cadastro"
+                    styleClass="btn btn-primario"/>
+        </div>
+
+    </main>
+
+    <footer>
+        <p>Biblioteca Cesumar &#169; 2025 — Sistema desenvolvido em
+           <span>Java · Servlets · JSP · JSF</span></p>
+    </footer>
+
+</h:body>
+</html>

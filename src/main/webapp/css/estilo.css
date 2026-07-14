@@ -1,0 +1,367 @@
+/* ============================================================
+   Biblioteca Cesumar — Folha de Estilos Principal
+   Autor: Sistema Web Biblioteca
+   ============================================================ */
+
+/* --- Importação de fontes --- */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Source+Sans+3:wght@300;400;600&display=swap');
+
+/* --- Variáveis de tema --- */
+:root {
+    --cor-primaria:    #1a3a5c;
+    --cor-secundaria:  #c8a96e;
+    --cor-fundo:       #f5f0e8;
+    --cor-branco:      #ffffff;
+    --cor-texto:       #2c2c2c;
+    --cor-texto-leve:  #6b6b6b;
+    --cor-borda:       #ddd5c0;
+    --cor-sucesso:     #2e6b3e;
+    --cor-erro:        #8b2635;
+    --cor-aviso:       #7a5c00;
+    --sombra:          0 4px 20px rgba(26, 58, 92, 0.12);
+    --raio:            8px;
+    --fonte-titulo:    'Playfair Display', Georgia, serif;
+    --fonte-corpo:     'Source Sans 3', sans-serif;
+}
+
+/* --- Reset e base --- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: var(--fonte-corpo);
+    background-color: var(--cor-fundo);
+    color: var(--cor-texto);
+    font-size: 16px;
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+/* --- Cabeçalho --- */
+header {
+    background: var(--cor-primaria);
+    color: var(--cor-branco);
+    padding: 0;
+    border-bottom: 4px solid var(--cor-secundaria);
+}
+
+.header-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 24px 32px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.header-icone {
+    font-size: 2.4rem;
+}
+
+.header-titulo h1 {
+    font-family: var(--fonte-titulo);
+    font-size: 1.8rem;
+    letter-spacing: 0.5px;
+}
+
+.header-titulo p {
+    font-size: 0.85rem;
+    color: var(--cor-secundaria);
+    font-weight: 300;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+/* --- Navegação --- */
+nav {
+    background: rgba(0,0,0,0.2);
+    padding: 0 32px;
+}
+
+nav ul {
+    max-width: 1100px;
+    margin: 0 auto;
+    list-style: none;
+    display: flex;
+    gap: 4px;
+}
+
+nav ul li a {
+    display: block;
+    padding: 12px 20px;
+    color: rgba(255,255,255,0.8);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    transition: all 0.2s;
+    border-bottom: 3px solid transparent;
+}
+
+nav ul li a:hover,
+nav ul li a.ativo {
+    color: var(--cor-secundaria);
+    border-bottom-color: var(--cor-secundaria);
+}
+
+/* --- Container principal --- */
+.container {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 0 32px;
+}
+
+/* --- Título de seção --- */
+.secao-titulo {
+    font-family: var(--fonte-titulo);
+    font-size: 1.6rem;
+    color: var(--cor-primaria);
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--cor-secundaria);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* --- Cards --- */
+.card {
+    background: var(--cor-branco);
+    border-radius: var(--raio);
+    box-shadow: var(--sombra);
+    padding: 32px;
+    margin-bottom: 24px;
+}
+
+/* --- Formulário --- */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.form-grupo {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.form-grupo.full-width {
+    grid-column: 1 / -1;
+}
+
+.form-grupo label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--cor-primaria);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.form-grupo input {
+    padding: 12px 14px;
+    border: 2px solid var(--cor-borda);
+    border-radius: var(--raio);
+    font-family: var(--fonte-corpo);
+    font-size: 1rem;
+    color: var(--cor-texto);
+    background: var(--cor-fundo);
+    transition: border-color 0.2s, box-shadow 0.2s;
+    outline: none;
+}
+
+.form-grupo input:focus {
+    border-color: var(--cor-primaria);
+    box-shadow: 0 0 0 3px rgba(26, 58, 92, 0.12);
+    background: var(--cor-branco);
+}
+
+.form-grupo small {
+    font-size: 0.78rem;
+    color: var(--cor-texto-leve);
+}
+
+/* --- Botões --- */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    border: none;
+    border-radius: var(--raio);
+    font-family: var(--fonte-corpo);
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s;
+    letter-spacing: 0.3px;
+}
+
+.btn-primario {
+    background: var(--cor-primaria);
+    color: var(--cor-branco);
+}
+
+.btn-primario:hover {
+    background: #0f2540;
+    box-shadow: 0 4px 12px rgba(26, 58, 92, 0.3);
+    transform: translateY(-1px);
+}
+
+.btn-perigo {
+    background: transparent;
+    color: var(--cor-erro);
+    border: 1px solid var(--cor-erro);
+    padding: 6px 14px;
+    font-size: 0.85rem;
+}
+
+.btn-perigo:hover {
+    background: var(--cor-erro);
+    color: var(--cor-branco);
+}
+
+.btn-secundario {
+    background: transparent;
+    color: var(--cor-primaria);
+    border: 2px solid var(--cor-primaria);
+}
+
+.btn-secundario:hover {
+    background: var(--cor-primaria);
+    color: var(--cor-branco);
+}
+
+.acoes-form {
+    display: flex;
+    gap: 12px;
+    margin-top: 8px;
+    grid-column: 1 / -1;
+}
+
+/* --- Tabela --- */
+.tabela-wrapper {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+}
+
+thead {
+    background: var(--cor-primaria);
+    color: var(--cor-branco);
+}
+
+thead th {
+    padding: 14px 16px;
+    text-align: left;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+tbody tr {
+    border-bottom: 1px solid var(--cor-borda);
+    transition: background 0.15s;
+}
+
+tbody tr:hover {
+    background: rgba(200, 169, 110, 0.08);
+}
+
+tbody td {
+    padding: 14px 16px;
+    color: var(--cor-texto);
+}
+
+tbody tr:last-child {
+    border-bottom: none;
+}
+
+.td-id {
+    font-weight: 700;
+    color: var(--cor-primaria);
+    width: 50px;
+}
+
+.td-isbn {
+    font-family: monospace;
+    font-size: 0.88rem;
+    color: var(--cor-texto-leve);
+}
+
+.tabela-vazia {
+    text-align: center;
+    padding: 48px;
+    color: var(--cor-texto-leve);
+    font-size: 1rem;
+}
+
+/* --- Mensagens de feedback --- */
+.mensagem {
+    padding: 14px 18px;
+    border-radius: var(--raio);
+    margin-bottom: 20px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.mensagem-sucesso {
+    background: #e8f5ec;
+    color: var(--cor-sucesso);
+    border-left: 4px solid var(--cor-sucesso);
+}
+
+.mensagem-erro {
+    background: #fbeaec;
+    color: var(--cor-erro);
+    border-left: 4px solid var(--cor-erro);
+}
+
+.mensagem-aviso {
+    background: #fff8e1;
+    color: var(--cor-aviso);
+    border-left: 4px solid #f0c000;
+}
+
+/* --- Contador de livros --- */
+.badge-contador {
+    background: var(--cor-secundaria);
+    color: var(--cor-primaria);
+    padding: 2px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    font-family: var(--fonte-corpo);
+}
+
+/* --- Rodapé --- */
+footer {
+    background: var(--cor-primaria);
+    color: rgba(255,255,255,0.5);
+    text-align: center;
+    padding: 20px;
+    font-size: 0.85rem;
+    margin-top: 60px;
+}
+
+footer span {
+    color: var(--cor-secundaria);
+}
+
+/* --- Responsividade --- */
+@media (max-width: 700px) {
+    .form-grid { grid-template-columns: 1fr; }
+    .form-grupo.full-width { grid-column: 1; }
+    .acoes-form { grid-column: 1; }
+    .header-inner { padding: 16px; }
+    .container { padding: 0 16px; }
+    nav { padding: 0 16px; }
+}

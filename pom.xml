@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    pom.xml — Arquivo de configuração do Maven.
+    Define as dependências do projeto: Jakarta EE (Servlets, JSP, JSF)
+    e o plugin do Tomcat 10 para execução local.
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                             http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- Identificação do projeto -->
+    <groupId>br.cesumar</groupId>
+    <artifactId>biblioteca-cesumar</artifactId>
+    <version>1.0.0</version>
+    <packaging>war</packaging>
+    <name>Biblioteca Cesumar</name>
+    <description>Sistema Web de Gerenciamento de Acervo Bibliográfico</description>
+
+    <properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <failOnMissingWebXml>false</failOnMissingWebXml>
+    </properties>
+
+    <dependencies>
+
+        <!-- ========================================================
+             Jakarta Servlet API — Para os Servlets (LivroServlet)
+             provided = o servidor de aplicação já fornece em runtime
+             ======================================================== -->
+        <dependency>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
+            <version>6.0.0</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- ========================================================
+             Jakarta Server Pages (JSP) — Para as views .jsp
+             ======================================================== -->
+        <dependency>
+            <groupId>jakarta.servlet.jsp</groupId>
+            <artifactId>jakarta.servlet.jsp-api</artifactId>
+            <version>3.1.0</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- ========================================================
+             JSTL — Tag Library usada nas views JSP (c:forEach etc.)
+             ======================================================== -->
+        <dependency>
+            <groupId>jakarta.servlet.jsp.jstl</groupId>
+            <artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.glassfish.web</groupId>
+            <artifactId>jakarta.servlet.jsp.jstl</artifactId>
+            <version>3.0.1</version>
+        </dependency>
+
+        <!-- ========================================================
+             Jakarta Faces (JSF) — Mojarra, implementação de referência
+             Inclui o FacesServlet e os componentes h:, f:
+             ======================================================== -->
+        <dependency>
+            <groupId>org.glassfish</groupId>
+            <artifactId>jakarta.faces</artifactId>
+            <version>4.0.1</version>
+        </dependency>
+
+      
+        <!-- ========================================================
+             Jakarta EL (Expression Language) — Para #{livroBean.campo}
+             ======================================================== -->
+        <dependency>
+            <groupId>jakarta.el</groupId>
+            <artifactId>jakarta.el-api</artifactId>
+            <version>5.0.0</version>
+            <scope>provided</scope>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.jboss.weld.servlet</groupId>
+            <artifactId>weld-servlet-shaded</artifactId>
+            <version>5.1.2.Final</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.glassfish</groupId> 
+           <artifactId>jakarta.el</artifactId>
+            <version>4.0.2</version>
+        </dependency>
+
+    </dependencies> 
+
+    <build>
+        <finalName>biblioteca-cesumar</finalName>
+
+        <plugins>
+
+            <!-- Compilador Java -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.11.0</version>
+                <configuration>
+                    <source>17</source>
+                    <target>17</target>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+
+            <!-- Empacotamento WAR -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.4.0</version>
+                <configuration>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                </configuration>
+            </plugin>
+
+            <!--
+                Plugin Cargo — Executa o Tomcat 10 localmente.
+                Use: mvn package cargo:run
+                Acesse: http://localhost:8080/biblioteca-cesumar
+            -->
+            <plugin>
+                <groupId>org.codehaus.cargo</groupId>
+                <artifactId>cargo-maven3-plugin</artifactId>
+                <version>1.10.9</version>
+                <configuration>
+                    <container>
+                        <containerId>tomcat10x</containerId>
+                        <type>embedded</type>
+                    </container>
+                    <configuration>
+                        <properties>
+                            <cargo.servlet.port>8080</cargo.servlet.port>
+                        </properties>
+                    </configuration>
+                    <deployables>
+                        <deployable>
+                            <groupId>br.cesumar</groupId>
+                            <artifactId>biblioteca-cesumar</artifactId>
+                            <type>war</type>
+                            <properties>
+                                <context>biblioteca-cesumar</context>
+                            </properties>
+                        </deployable>
+                    </deployables>
+                </configuration>
+            </plugin>
+
+        </plugins>
+    </build>
+
+</project>

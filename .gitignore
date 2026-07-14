@@ -1,0 +1,13 @@
+target/
+*.class
+*.war
+.idea/
+*.iml
+nbproject/
+nbbuild/
+nbdist/
+.nb-gradle/
+build/
+.settings/
+.classpath
+.project
