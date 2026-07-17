@@ -1,7 +1,7 @@
 # 📚 Biblioteca Cesumar — Sistema Web Java
 
 Sistema web para gerenciamento de acervo bibliográfico desenvolvido com
-**Java · Servlets · JSP · JSF · Maven · JDBC · SQLite**, seguindo o padrão **MVC**.
+**Java · Servlets · JSP · JSF · Maven · JDBC · H2**, seguindo o padrão **MVC**.
 
 ---
 
@@ -17,7 +17,7 @@ biblioteca-cesumar/
     │   ├── model/
     │   │   └── Livro.java           ← Entidade (MODEL)
     │   ├── dao/
-    │   │   ├── ConexaoSQLite.java   ← Conexão e criação da tabela (MODEL)
+    │   │   ├── ConexaoBanco.java   ← Conexão e criação da tabela (MODEL)
     │   │   └── LivroDAO.java        ← Acesso a dados via JDBC (MODEL)
     │   └── controller/
     │       ├── LivroServlet.java    ← Servlet Controller (CONTROLLER)
@@ -137,7 +137,7 @@ cp target/biblioteca-cesumar.war /caminho/para/tomcat/webapps/
 - [x] Mensagens de sucesso e erro ao usuário
 - [x] Código organizado em pacotes model / controller / dao
 - [x] Comentários explicativos em todo o código
-- [x] Persistência real em banco de dados via JDBC + SQLite
+- [x] Persistência real em banco de dados via JDBC + H2
 - [x] Uso de PreparedStatement em todas as consultas (proteção contra SQL Injection)
 - [x] Restrição UNIQUE de ISBN aplicada também no nível do banco de dados
 
@@ -145,8 +145,8 @@ cp target/biblioteca-cesumar.war /caminho/para/tomcat/webapps/
 
 ## 📝 Observações técnicas
 
-- O armazenamento dos livros é feito em um **banco de dados SQLite real**, via JDBC
-  (`ConexaoSQLite` + `LivroDAO`). O banco é um único arquivo (`biblioteca.db`), criado
+- O armazenamento dos livros é feito em um **banco de dados H2 real**, via JDBC
+  (`ConexaoBanco` + `LivroDAO`). O banco é um único arquivo (`biblioteca.mv.db`), criado
   automaticamente na primeira execução — não é necessário instalar nenhum servidor
   de banco de dados separado. Os dados persistem entre reinicializações do servidor.
 - Todas as consultas usam `PreparedStatement`, o que evita SQL Injection: os valores

@@ -1,6 +1,9 @@
 target/
 *.class
 *.war
+*.db
+*.mv.db
+*.trace.db
 .idea/
 *.iml
 nbproject/

@@ -22,7 +22,7 @@ import java.util.List;
 public class LivroDAO {
 
     static {
-        ConexaoSQLite.inicializarBanco();
+        ConexaoBanco.inicializarBanco();
         semearDadosIniciais();
     }
 
@@ -46,7 +46,7 @@ public class LivroDAO {
     public void cadastrar(Livro livro) {
         String sql = "INSERT INTO livros (titulo, autor, ano_publicacao, isbn) VALUES (?, ?, ?, ?)";
 
-        try (Connection conn = ConexaoSQLite.conectar();
+        try (Connection conn = ConexaoBanco.conectar();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, livro.getTitulo());
@@ -67,7 +67,7 @@ public class LivroDAO {
         List<Livro> livros = new ArrayList<>();
         String sql = "SELECT id, titulo, autor, ano_publicacao, isbn FROM livros ORDER BY id";
 
-        try (Connection conn = ConexaoSQLite.conectar();
+        try (Connection conn = ConexaoBanco.conectar();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
 
@@ -89,7 +89,7 @@ public class LivroDAO {
     public boolean excluirPorId(int id) {
         String sql = "DELETE FROM livros WHERE id = ?";
 
-        try (Connection conn = ConexaoSQLite.conectar();
+        try (Connection conn = ConexaoBanco.conectar();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, id);
@@ -107,7 +107,7 @@ public class LivroDAO {
     public boolean excluirPorIsbn(String isbn) {
         String sql = "DELETE FROM livros WHERE isbn = ?";
 
-        try (Connection conn = ConexaoSQLite.conectar();
+        try (Connection conn = ConexaoBanco.conectar();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, isbn);
@@ -126,7 +126,7 @@ public class LivroDAO {
     public boolean isbnJaExiste(String isbn) {
         String sql = "SELECT 1 FROM livros WHERE isbn = ?";
 
-        try (Connection conn = ConexaoSQLite.conectar();
+        try (Connection conn = ConexaoBanco.conectar();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, isbn);
@@ -146,7 +146,7 @@ public class LivroDAO {
     public Livro buscarPorId(int id) {
         String sql = "SELECT id, titulo, autor, ano_publicacao, isbn FROM livros WHERE id = ?";
 
-        try (Connection conn = ConexaoSQLite.conectar();
+        try (Connection conn = ConexaoBanco.conectar();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, id);

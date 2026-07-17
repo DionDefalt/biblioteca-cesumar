@@ -97,6 +97,18 @@
             <version>4.0.2</version>
         </dependency>
 
+        <!-- ========================================================
+             Driver JDBC do H2 — usado pelo LivroDAO para persistir os
+             livros em um arquivo de banco de dados (biblioteca.mv.db).
+             O H2 é 100% Java, sem dependências nativas do sistema
+             operacional.
+             ======================================================== -->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>2.2.224</version>
+        </dependency>
+
     </dependencies> 
 
     <build>
