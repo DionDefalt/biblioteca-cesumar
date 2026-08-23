@@ -1,4 +1,4 @@
-target/
+﻿target/
 *.class
 *.war
 *.db
@@ -14,3 +14,4 @@ build/
 .settings/
 .classpath
 .project
+.env

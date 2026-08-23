@@ -1,5 +1,5 @@
 <%--
-    cadastro.jsp — View do formulário de cadastro de livros via Servlet.
+    cadastro.jsp — View do formulário de cadastro de projetos via Servlet.
     Os dados são enviados via POST para o LivroServlet.
     Camada VIEW do padrão MVC.
 --%>
@@ -10,7 +10,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastrar Livro — Biblioteca Cesumar</title>
+    <title>Cadastrar Projeto — Biblioteca DionDefalt</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/estilo.css">
 </head>
 <body>
@@ -20,15 +20,14 @@
     <div class="header-inner">
         <span class="header-icone">📚</span>
         <div class="header-titulo">
-            <h1>Biblioteca Cesumar</h1>
-            <p>Sistema de Gerenciamento do Acervo</p>
+            <h1>Biblioteca DionDefalt</h1>
+            <p>Catálogo de Projetos</p>
         </div>
     </div>
     <nav>
         <ul>
-            <li><a href="${pageContext.request.contextPath}/livros">📋 Acervo</a></li>
-            <li><a href="${pageContext.request.contextPath}/livros?acao=form" class="ativo">➕ Cadastrar Livro</a></li>
-            <li><a href="${pageContext.request.contextPath}/cadastro.xhtml">🖊 Cadastro JSF</a></li>
+            <li><a href="${pageContext.request.contextPath}/livros">📋 Projetos</a></li>
+            <li><a href="${pageContext.request.contextPath}/livros?acao=form" class="ativo">➕ Cadastrar Projeto</a></li>
         </ul>
     </nav>
 </header>
@@ -36,7 +35,7 @@
 <!-- CONTEÚDO PRINCIPAL -->
 <main class="container">
 
-    <h2 class="secao-titulo">➕ Cadastrar Novo Livro</h2>
+    <h2 class="secao-titulo">➕ Cadastrar Novo Projeto</h2>
 
     <!-- Exibe mensagem de erro de validação, se houver -->
     <c:if test="${not empty erro}">
@@ -57,37 +56,37 @@
 
             <div class="form-grid">
 
-                <!-- Título -->
+                <!-- Nome do projeto -->
                 <div class="form-grupo full-width">
-                    <label for="titulo">Título do Livro *</label>
+                    <label for="titulo">Nome do Projeto *</label>
                     <input type="text"
                            id="titulo"
                            name="titulo"
-                           placeholder="Ex: O Senhor dos Anéis"
+                           placeholder="Ex: Task Manager AWS"
                            value="${param.titulo}"
                            maxlength="200"
                            required>
                 </div>
 
-                <!-- Autor -->
+                <!-- Stack / tecnologias -->
                 <div class="form-grupo full-width">
-                    <label for="autor">Autor *</label>
+                    <label for="autor">Stack / Tecnologias *</label>
                     <input type="text"
                            id="autor"
                            name="autor"
-                           placeholder="Ex: J.R.R. Tolkien"
+                           placeholder="Ex: Node.js, Docker, ECS, RDS"
                            value="${param.autor}"
                            maxlength="150"
                            required>
                 </div>
 
-                <!-- Ano de publicação -->
+                <!-- Ano -->
                 <div class="form-grupo">
-                    <label for="anoPublicacao">Ano de Publicação *</label>
+                    <label for="anoPublicacao">Ano *</label>
                     <input type="number"
                            id="anoPublicacao"
                            name="anoPublicacao"
-                           placeholder="Ex: 1954"
+                           placeholder="Ex: 2026"
                            value="${param.anoPublicacao}"
                            min="1000"
                            max="2099"
@@ -95,27 +94,27 @@
                     <small>Informe um ano entre 1000 e 2099.</small>
                 </div>
 
-                <!-- ISBN -->
+                <!-- Link do projeto -->
                 <div class="form-grupo">
-                    <label for="isbn">ISBN *</label>
+                    <label for="isbn">Link do Projeto *</label>
                     <input type="text"
                            id="isbn"
                            name="isbn"
-                           placeholder="Ex: 978-8533615540"
+                           placeholder="Ex: https://taskmanager.diondefalt.dev"
                            value="${param.isbn}"
-                           maxlength="20"
+                           maxlength="500"
                            required>
-                    <small>ISBN com 10 ou 13 dígitos (hifens são aceitos).</small>
+                    <small>URL completa onde o projeto está publicado.</small>
                 </div>
 
                 <!-- Botões -->
                 <div class="acoes-form">
                     <button type="submit" class="btn btn-primario">
-                        ✅ Cadastrar Livro
+                        ✅ Cadastrar Projeto
                     </button>
                     <a href="${pageContext.request.contextPath}/livros"
                        class="btn btn-secundario">
-                        ← Voltar ao Acervo
+                        ← Voltar ao Catálogo
                     </a>
                 </div>
 
@@ -123,22 +122,10 @@
         </form>
     </div>
 
-    <!-- Informação sobre o formulário JSF -->
-    <div class="card" style="background: #eef3f9; border-left: 4px solid #1a3a5c;">
-        <p style="color: #1a3a5c; font-size: 0.9rem;">
-            🖊 <strong>Prefere usar o JSF?</strong>
-            <a href="${pageContext.request.contextPath}/cadastro.xhtml"
-               style="color: #c8a96e; font-weight: 600; text-decoration: none;">
-               Clique aqui para o formulário JSF
-            </a>
-            — ambos realizam o mesmo cadastro.
-        </p>
-    </div>
-
 </main>
 
 <footer>
-    <p>Biblioteca Cesumar &copy; 2025 — Sistema desenvolvido em
+    <p>Biblioteca DionDefalt &copy; 2026 — Sistema desenvolvido em
        <span>Java · Servlets · JSP · JSF</span></p>
 </footer>
 

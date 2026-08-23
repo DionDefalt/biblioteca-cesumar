@@ -14,10 +14,11 @@ import java.util.List;
 
 /**
  * Servlet Controller responsável por gerenciar todas as requisições
- * relacionadas aos livros. Segue o padrão MVC como camada Controller.
+ * relacionadas aos projetos do catálogo. Segue o padrão MVC como
+ * camada Controller.
  *
  * Mapeamento de ações:
- *   GET  /livros?acao=listar   → Exibe lista de livros
+ *   GET  /livros?acao=listar   → Exibe lista de projetos
  *   GET  /livros?acao=form     → Exibe formulário de cadastro
  *   POST /livros?acao=cadastrar → Processa o cadastro
  *   POST /livros?acao=excluir  → Processa a exclusão
@@ -38,7 +39,7 @@ public class LivroServlet extends HttpServlet {
         String acao = request.getParameter("acao");
 
         if (acao == null || acao.equals("listar")) {
-            // Ação padrão: listar todos os livros
+            // Ação padrão: listar todos os projetos
             listarLivros(request, response);
 
         } else if (acao.equals("form")) {
@@ -84,7 +85,7 @@ public class LivroServlet extends HttpServlet {
     // ---------------------------------------------------------------
 
     /**
-     * Lista todos os livros e encaminha para a view de listagem.
+     * Lista todos os projetos e encaminha para a view de listagem.
      */
     private void listarLivros(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -96,7 +97,7 @@ public class LivroServlet extends HttpServlet {
     }
 
     /**
-     * Valida e processa o cadastro de um novo livro.
+     * Valida e processa o cadastro de um novo projeto.
      */
     private void cadastrarLivro(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -133,18 +134,18 @@ public class LivroServlet extends HttpServlet {
             return;
         }
 
-        // ISBN deve ter 10 ou 13 dígitos (apenas números e hifens)
-        String isbnLimpo = isbn.replaceAll("[-\\s]", "");
-        if (!isbnLimpo.matches("\\d{10}|\\d{13}")) {
-            request.setAttribute("erro", "ISBN inválido. Informe 10 ou 13 dígitos numéricos.");
+        // Link do projeto deve ser uma URL válida (http:// ou https://)
+        String linkLimpo = isbn.trim();
+        if (!linkLimpo.matches("^https?://.+\\..+")) {
+            request.setAttribute("erro", "Link inválido. Informe uma URL completa, começando com http:// ou https://.");
             request.getRequestDispatcher("/views/cadastro.jsp")
                    .forward(request, response);
             return;
         }
 
-        // ISBN não pode ser duplicado
-        if (livroDAO.isbnJaExiste(isbn.trim())) {
-            request.setAttribute("erro", "Já existe um livro cadastrado com este ISBN.");
+        // Link não pode ser duplicado
+        if (livroDAO.isbnJaExiste(linkLimpo)) {
+            request.setAttribute("erro", "Já existe um projeto cadastrado com este link.");
             request.getRequestDispatcher("/views/cadastro.jsp")
                    .forward(request, response);
             return;
@@ -155,7 +156,7 @@ public class LivroServlet extends HttpServlet {
         novoLivro.setTitulo(titulo.trim());
         novoLivro.setAutor(autor.trim());
         novoLivro.setAnoPublicacao(ano);
-        novoLivro.setIsbn(isbn.trim());
+        novoLivro.setIsbn(linkLimpo);
 
         livroDAO.cadastrar(novoLivro);
 
@@ -164,7 +165,7 @@ public class LivroServlet extends HttpServlet {
     }
 
     /**
-     * Processa a exclusão de um livro por ID ou ISBN.
+     * Processa a exclusão de um projeto por ID ou link.
      */
     private void excluirLivro(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

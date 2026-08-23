@@ -12,12 +12,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <!-- Identificação do projeto -->
-    <groupId>br.cesumar</groupId>
-    <artifactId>biblioteca-cesumar</artifactId>
+    <groupId>br.diondefalt</groupId>
+    <artifactId>biblioteca-diondefalt</artifactId>
     <version>1.0.0</version>
     <packaging>war</packaging>
-    <name>Biblioteca Cesumar</name>
-    <description>Sistema Web de Gerenciamento de Acervo Bibliográfico</description>
+    <name>Biblioteca DionDefalt</name>
+    <description>Catálogo de projetos pessoais em produção na AWS</description>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -74,7 +74,7 @@
             <version>4.0.1</version>
         </dependency>
 
-      
+
         <!-- ========================================================
              Jakarta EL (Expression Language) — Para #{livroBean.campo}
              ======================================================== -->
@@ -84,35 +84,34 @@
             <version>5.0.0</version>
             <scope>provided</scope>
         </dependency>
-        
+
         <dependency>
             <groupId>org.jboss.weld.servlet</groupId>
             <artifactId>weld-servlet-shaded</artifactId>
             <version>5.1.2.Final</version>
         </dependency>
-        
+
         <dependency>
-            <groupId>org.glassfish</groupId> 
-           <artifactId>jakarta.el</artifactId>
+            <groupId>org.glassfish</groupId>
+            <artifactId>jakarta.el</artifactId>
             <version>4.0.2</version>
         </dependency>
 
         <!-- ========================================================
-             Driver JDBC do H2 — usado pelo LivroDAO para persistir os
-             livros em um arquivo de banco de dados (biblioteca.mv.db).
-             O H2 é 100% Java, sem dependências nativas do sistema
-             operacional.
+             Driver JDBC do PostgreSQL — usado pelo LivroDAO para
+             persistir os projetos no RDS. As credenciais de conexão
+             vêm de variáveis de ambiente (ver ConexaoBanco.java).
              ======================================================== -->
         <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <version>2.2.224</version>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.7.4</version>
         </dependency>
 
-    </dependencies> 
+    </dependencies>
 
     <build>
-        <finalName>biblioteca-cesumar</finalName>
+        <finalName>biblioteca-diondefalt</finalName>
 
         <plugins>
 
@@ -141,7 +140,7 @@
             <!--
                 Plugin Cargo — Executa o Tomcat 10 localmente.
                 Use: mvn package cargo:run
-                Acesse: http://localhost:8080/biblioteca-cesumar
+                Acesse: http://localhost:8080/biblioteca-diondefalt
             -->
             <plugin>
                 <groupId>org.codehaus.cargo</groupId>
@@ -159,11 +158,11 @@
                     </configuration>
                     <deployables>
                         <deployable>
-                            <groupId>br.cesumar</groupId>
-                            <artifactId>biblioteca-cesumar</artifactId>
+                            <groupId>br.diondefalt</groupId>
+                            <artifactId>biblioteca-diondefalt</artifactId>
                             <type>war</type>
                             <properties>
-                                <context>biblioteca-cesumar</context>
+                                <context>biblioteca-diondefalt</context>
                             </properties>
                         </deployable>
                     </deployables>

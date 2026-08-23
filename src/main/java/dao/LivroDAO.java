@@ -12,12 +12,15 @@ import java.util.List;
 
 /**
  * Classe DAO (Data Access Object) responsável pelo acesso e manipulação
- * dos dados dos livros.
+ * dos dados dos projetos listados no catálogo.
  *
- * Versão com persistência real em banco de dados via JDBC + SQLite.
- * Todas as consultas usam PreparedStatement, o que evita SQL Injection
- * (os valores enviados pelo usuário nunca são concatenados diretamente
- * na string do SQL).
+ * Reaproveita o modelo original de "livro" reinterpretando os campos:
+ * titulo = nome do projeto, autor = stack/tecnologias usadas,
+ * anoPublicacao = ano do projeto, isbn = link ao vivo do projeto.
+ *
+ * Persistência via JDBC + PostgreSQL (RDS). Todas as consultas usam
+ * PreparedStatement, o que evita SQL Injection (os valores enviados
+ * pelo usuário nunca são concatenados diretamente na string do SQL).
  */
 public class LivroDAO {
 
@@ -27,21 +30,28 @@ public class LivroDAO {
     }
 
     /**
-     * Insere os três livros de exemplo apenas se o banco estiver vazio
+     * Insere os projetos de exemplo apenas se o banco estiver vazio
      * (evita duplicar os dados toda vez que o servidor reinicia).
      */
     private static void semearDadosIniciais() {
         LivroDAO dao = new LivroDAO();
         if (dao.listarTodos().isEmpty()) {
-            dao.cadastrar(new Livro(0, "Clean Code", "Robert C. Martin", 2008, "9780132350884"));
-            dao.cadastrar(new Livro(0, "Design Patterns", "Gang of Four", 1994, "9780201633610"));
-            dao.cadastrar(new Livro(0, "Java Efetivo", "Joshua Bloch", 2018, "9788550804606"));
+            dao.cadastrar(new Livro(0,
+                "Task Manager AWS",
+                "Node.js, Express, PostgreSQL, Docker, ECS, ECR, RDS",
+                2026,
+                "https://taskmanager.dionesdev.com.br"));
+            dao.cadastrar(new Livro(0,
+                "Mural de Recados",
+                "Node.js, Docker",
+                2026,
+                "https://mural-recado.onrender.com/"));
         }
     }
 
     /**
-     * Cadastra um novo livro no banco de dados.
-     * O id é gerado automaticamente pelo SQLite (AUTOINCREMENT).
+     * Cadastra um novo projeto no catálogo.
+     * O id é gerado automaticamente pelo PostgreSQL (SERIAL).
      */
     public void cadastrar(Livro livro) {
         String sql = "INSERT INTO livros (titulo, autor, ano_publicacao, isbn) VALUES (?, ?, ?, ?)";
@@ -56,12 +66,12 @@ public class LivroDAO {
             stmt.executeUpdate();
 
         } catch (SQLException e) {
-            throw new RuntimeException("Erro ao cadastrar livro.", e);
+            throw new RuntimeException("Erro ao cadastrar projeto.", e);
         }
     }
 
     /**
-     * Retorna todos os livros cadastrados, ordenados por id.
+     * Retorna todos os projetos cadastrados, ordenados por id.
      */
     public List<Livro> listarTodos() {
         List<Livro> livros = new ArrayList<>();
@@ -76,14 +86,14 @@ public class LivroDAO {
             }
 
         } catch (SQLException e) {
-            throw new RuntimeException("Erro ao listar livros.", e);
+            throw new RuntimeException("Erro ao listar projetos.", e);
         }
 
         return livros;
     }
 
     /**
-     * Remove um livro do banco pelo ID.
+     * Remove um projeto do catálogo pelo ID.
      * @return true se algum registro foi removido, false se não encontrado
      */
     public boolean excluirPorId(int id) {
@@ -96,12 +106,12 @@ public class LivroDAO {
             return stmt.executeUpdate() > 0;
 
         } catch (SQLException e) {
-            throw new RuntimeException("Erro ao excluir livro.", e);
+            throw new RuntimeException("Erro ao excluir projeto.", e);
         }
     }
 
     /**
-     * Remove um livro do banco pelo ISBN.
+     * Remove um projeto do catálogo pelo link (antigo "ISBN").
      * @return true se algum registro foi removido, false se não encontrado
      */
     public boolean excluirPorIsbn(String isbn) {
@@ -114,12 +124,12 @@ public class LivroDAO {
             return stmt.executeUpdate() > 0;
 
         } catch (SQLException e) {
-            throw new RuntimeException("Erro ao excluir livro.", e);
+            throw new RuntimeException("Erro ao excluir projeto.", e);
         }
     }
 
     /**
-     * Verifica se já existe um livro cadastrado com o ISBN informado.
+     * Verifica se já existe um projeto cadastrado com o mesmo link.
      * (A coluna isbn também tem uma restrição UNIQUE no banco, como
      * segunda camada de proteção contra duplicatas.)
      */
@@ -135,13 +145,13 @@ public class LivroDAO {
             }
 
         } catch (SQLException e) {
-            throw new RuntimeException("Erro ao verificar ISBN.", e);
+            throw new RuntimeException("Erro ao verificar link do projeto.", e);
         }
     }
 
     /**
-     * Busca um único livro pelo ID.
-     * @return o livro encontrado, ou null se não existir
+     * Busca um único projeto pelo ID.
+     * @return o projeto encontrado, ou null se não existir
      */
     public Livro buscarPorId(int id) {
         String sql = "SELECT id, titulo, autor, ano_publicacao, isbn FROM livros WHERE id = ?";
@@ -155,7 +165,7 @@ public class LivroDAO {
             }
 
         } catch (SQLException e) {
-            throw new RuntimeException("Erro ao buscar livro.", e);
+            throw new RuntimeException("Erro ao buscar projeto.", e);
         }
     }
 
