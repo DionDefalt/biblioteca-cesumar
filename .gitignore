@@ -1,0 +1,17 @@
+﻿target/
+*.class
+*.war
+*.db
+*.mv.db
+*.trace.db
+.idea/
+*.iml
+nbproject/
+nbbuild/
+nbdist/
+.nb-gradle/
+build/
+.settings/
+.classpath
+.project
+.env

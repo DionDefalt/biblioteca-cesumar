@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    web.xml — Descritor de implantação da aplicação web.
+    Configura o servlet do JSF (FacesServlet), o encoding padrão
+    e a página de boas-vindas do sistema.
+-->
+<web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee
+                             https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd"
+         version="5.0">
+    <listener>
+    <listener-class>org.jboss.weld.environment.servlet.Listener</listener-class>
+    </listener>
+    <display-name>Biblioteca Cesumar</display-name>
+
+    <!-- ============================================================
+         Configuração do JSF — FacesServlet
+         Intercepta todas as requisições .xhtml e processa o JSF
+         ============================================================ -->
+    <servlet>
+        <servlet-name>Faces Servlet</servlet-name>
+        <servlet-class>jakarta.faces.webapp.FacesServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Faces Servlet</servlet-name>
+        <url-pattern>*.xhtml</url-pattern>
+    </servlet-mapping>
+
+    <!-- ============================================================
+         Configuração de encoding UTF-8 para suporte a acentos
+         ============================================================ -->
+    <request-character-encoding>UTF-8</request-character-encoding>
+    <response-character-encoding>UTF-8</response-character-encoding>
+
+    <!-- ============================================================
+         Parâmetros de contexto do JSF
+         ============================================================ -->
+
+    <!-- Ativa o modo de desenvolvimento do JSF (erros detalhados) -->
+    <context-param>
+        <param-name>jakarta.faces.PROJECT_STAGE</param-name>
+        <param-value>Development</param-value>
+    </context-param>
+
+    <!-- Define o sufixo padrão dos arquivos de view JSF -->
+    <context-param>
+        <param-name>jakarta.faces.DEFAULT_SUFFIX</param-name>
+        <param-value>.xhtml</param-value>
+    </context-param>
+
+    <!-- ============================================================
+         Página de boas-vindas
+         ============================================================ -->
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+
+</web-app>
